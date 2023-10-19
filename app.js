@@ -30,10 +30,12 @@ app.use(cookieParser());
 //import all routes
 const home = require("./routes/home");
 const user = require("./routes/user");
+const report = require("./routes/report");
 
 //router middlewares
 app.use("/api/v1", home);
 app.use("/api/v1", user);
+app.use("/api/v1", report);
 
 //passport middlwares
 app.use(passport.initialize());

@@ -1,10 +1,17 @@
 import sys
 import joblib
 
+
 def main():
-    print("Hello",sys.argv[1])
-    model=joblib.load("./ML/techmodelfinal.joblib")
-    print(model.predict([[100,21]]))
+    if(sys.argv[1]==1 or sys.argv[1]=="1"):
+        model=joblib.load("./ML/techmodelfinal.joblib")
+        print(model.predict([[sys.argv[2],sys.argv[3]]])[0])
+    elif sys.argv[1]==2 or sys.argv[1]=="2":
+        model=joblib.load("./ML/furnmodelfinal.joblib")
+        print(model.predict([[sys.argv[2],sys.argv[3]]])[0])
+    else:
+        model=joblib.load("./ML/officemodelfinal.joblib")
+        print(model.predict([[sys.argv[2],sys.argv[3]]])[0])
 
 if __name__=='__main__':
     main()
