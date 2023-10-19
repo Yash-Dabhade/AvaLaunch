@@ -3,6 +3,7 @@ const BigPromise = require("../middlewares/bigPromise.js");
 const customError = require("../utils/customError");
 const cookieToken = require("../utils/cookieToken");
 const doPrediction = require("../utils/predict");
+const doPrediction2 = require("../utils/predict");
 require("dotenv").config();
 
 //sign up controller
@@ -22,7 +23,7 @@ exports.intializeReport = BigPromise(async (req, res, next) => {
     return next(new customError("All fields are are mandatory !"));
   }
 
-  const output = doPrediction(
+  const output = await doPrediction2(
     categoryName,
     subCategoryName,
     lowerRange,
