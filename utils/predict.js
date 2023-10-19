@@ -3,92 +3,18 @@ const { PythonShell } = require("python-shell");
 
 const doPrediction = async (category, subCategory, lowerRange, upperRange) => {
   let result = {
-    1: { start: 100000000, end: 0 },
-    2: { start: 100000000, end: 0 },
-    3: { start: 100000000, end: 0 },
-    4: { start: 100000000, end: 0 },
-    5: { start: 100000000, end: 0 },
-    6: { start: 100000000, end: 0 },
-    7: { start: 100000000, end: 0 },
-    8: { start: 100000000, end: 0 },
-    9: { start: 100000000, end: 0 },
-    10: { start: 100000000, end: 0 },
-    11: { start: 100000000, end: 0 },
-    12: { start: 100000000, end: 0 },
-  };
-  // for (
-  //   let sale = parseInt(lowerRange);
-  //   sale <= parseInt(upperRange);
-  //   sale += 100
-  // ) {
-  // let options = {
-  //   mode: "text",
-  //   scriptPath: "C:\\Users\\yashd\\OneDrive\\Desktop\\Ava-Launch\\server",
-  //   args: ["py-script.py", category, sale, subCategory],
-  // };
-  // PythonShell.run("py-script.py", options).then((messages) => {
-  //   // results is an array consisting of messages collected during execution
-  //   // console.log("results: ", messages);
-  //   let month = Math.floor(parseInt(messages[0]));
-  //   const prevStart = result[month].start;
-  //   const prevEnd = result[month].end;
-  //   result[month].start = Math.min(prevStart, sale);
-  //   result[month].end = Math.max(prevEnd, sale);
-  // });
-  console.log("Final :", helper(category, subCategory, lowerRange, upperRange));
-  // }
-};
-
-const helper = (category, subCategory, lowerRange, upperRange) => {
-  let result = {
-    1: { start: 100000000, end: 0 },
-    2: { start: 100000000, end: 0 },
-    3: { start: 100000000, end: 0 },
-    4: { start: 100000000, end: 0 },
-    5: { start: 100000000, end: 0 },
-    6: { start: 100000000, end: 0 },
-    7: { start: 100000000, end: 0 },
-    8: { start: 100000000, end: 0 },
-    9: { start: 100000000, end: 0 },
-    10: { start: 100000000, end: 0 },
-    11: { start: 100000000, end: 0 },
-    12: { start: 100000000, end: 0 },
-  };
-  for (let sale = lowerRange; sale <= upperRange; sale += 1000) {
-    let py = spawn("python", ["py-script.py", category, sale, subCategory]);
-    let month;
-    py.stdout.on("data", (data) => {
-      // console.log(data.toString());
-      month = Math.floor(parseInt(data.toString()));
-      const prevStart = result[month].start;
-      const prevEnd = result[month].end;
-      result[month].start = Math.min(prevStart, sale);
-      result[month].end = Math.max(prevEnd, sale);
-      console.log(month);
-    });
-    py.on("exit", (code) => {
-      // return month;
-      // console.log("Child process exited with code ", code);
-    });
-  }
-  return result;
-};
-
-const doPrediction2 = async (category, subCategory, lowerRange, upperRange) => {
-  console.log(lowerRange, upperRange);
-  let result = {
-    1: { start: 100000000, end: 0 },
-    2: { start: 100000000, end: 0 },
-    3: { start: 100000000, end: 0 },
-    4: { start: 100000000, end: 0 },
-    5: { start: 100000000, end: 0 },
-    6: { start: 100000000, end: 0 },
-    7: { start: 100000000, end: 0 },
-    8: { start: 100000000, end: 0 },
-    9: { start: 100000000, end: 0 },
-    10: { start: 100000000, end: 0 },
-    11: { start: 100000000, end: 0 },
-    12: { start: 100000000, end: 0 },
+    1: { start: -1, end: -1 },
+    2: { start: -1, end: -1 },
+    3: { start: -1, end: -1 },
+    4: { start: -1, end: -1 },
+    5: { start: -1, end: -1 },
+    6: { start: -1, end: -1 },
+    7: { start: -1, end: -1 },
+    8: { start: -1, end: -1 },
+    9: { start: -1, end: -1 },
+    10: { start: -1, end: -1 },
+    11: { start: -1, end: -1 },
+    12: { start: -1, end: -1 },
   };
   async function nested(resolveOfAnotherPromise) {
     for (
@@ -103,10 +29,15 @@ const doPrediction2 = async (category, subCategory, lowerRange, upperRange) => {
       };
       PythonShell.run("py-script.py", options).then((messages) => {
         let month = Math.floor(parseInt(messages[0]));
-        const prevStart = result[month].start;
-        const prevEnd = result[month].end;
-        result[month].start = Math.min(prevStart, sale);
-        result[month].end = Math.max(prevEnd, sale);
+
+        if (result[month].start != -1)
+          result[month].start = Math.min(result[month].start, sale);
+        else result[month].start = sale;
+
+        if (result[month].end != -1)
+          result[month].end = Math.max(result[month].end, sale);
+        else result[month].end = sale;
+
         if (sale + 100 >= upperRange) resolveOfAnotherPromise(0);
       });
     }
@@ -115,4 +46,4 @@ const doPrediction2 = async (category, subCategory, lowerRange, upperRange) => {
   return result;
 };
 
-module.exports = doPrediction2;
+module.exports = doPrediction;
