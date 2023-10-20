@@ -9,6 +9,6 @@ const { intializeReport } = require("../controllers/reportController");
 const { isLoggedIn, customRole } = require("../middlewares/user");
 
 //setting user routes
-router.route("/report/intialize").post(isLoggedIn, intializeReport);
+router.route("/report/intialize").post(intializeReport);
 
 module.exports = router;

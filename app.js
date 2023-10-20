@@ -11,7 +11,7 @@ const cors = require("cors");
 const app = express();
 
 //setting up cors
-// app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use(session({ resave: false, saveUninitialized: true, secret: "SECRET" }));
 
