@@ -24,7 +24,7 @@ const doPrediction = async (category, subCategory, lowerRange, upperRange) => {
     ) {
       let options = {
         mode: "text",
-        scriptPath: "C:\\Users\\yashd\\OneDrive\\Desktop\\Ava-Launch\\server",
+        scriptPath: "./",
         args: ["py-script.py", category, sale, subCategory],
       };
       PythonShell.run("py-script.py", options).then((messages) => {
